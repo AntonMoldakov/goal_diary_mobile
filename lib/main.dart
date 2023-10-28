@@ -1,19 +1,21 @@
 import 'package:flutter/material.dart';
-import 'package:goal_diary/internal/app.dart';
-import 'package:goal_diary/internal/services/dio.dart';
+import 'package:get_it/get_it.dart';
+import 'package:goal_diary/app.dart';
+import 'package:goal_diary/shared/services/api.dart';
 import 'package:talker_flutter/talker_flutter.dart';
 import 'package:talker_dio_logger/talker_dio_logger.dart';
 
 void main() {
   final talker = TalkerFlutter.init();
-  final api = ApiClient()
-      .addLogger(TalkerDioLogger(
-        talker: talker,
-        settings: const TalkerDioLoggerSettings(
-          printResponseData: false,
-        ),
-      ))
-      .getApiClient();
+  GetIt.I.registerSingleton(talker);
+
+  final api = ApiClient().addLogger(TalkerDioLogger(
+    talker: talker,
+    settings: const TalkerDioLoggerSettings(
+      printResponseData: false,
+    ),
+  ));
+  GetIt.I.registerSingleton(api);
 
   runApp(MyApp());
 }

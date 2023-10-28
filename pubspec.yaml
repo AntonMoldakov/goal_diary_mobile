@@ -18,6 +18,7 @@ dependencies:
   talker: ^3.1.4
   talker_flutter: ^3.5.3
   talker_dio_logger: ^2.3.1
+  get_it: ^7.6.4
 
 dev_dependencies:
   flutter_test:
