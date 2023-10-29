@@ -1,4 +1,6 @@
 import 'package:dio/dio.dart';
+import 'package:get_it/get_it.dart';
+import 'package:goal_diary/shared/config/config.dart';
 
 class ApiClient {
   static late Dio _api;
@@ -10,7 +12,9 @@ class ApiClient {
   ApiClient._internal() {
     _api = Dio();
 
-    _api.options.baseUrl = 'https://jsonplaceholder.typicode.com/';
+    final config = GetIt.I<Config>();
+
+    _api.options.baseUrl = config.baseApiUrl;
     _api.options.headers = {'Content-Type': 'application/json'};
   }
 
