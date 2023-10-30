@@ -1,5 +1,5 @@
-import 'package:flutter/material.dart';
-import 'package:goal_diary/presentation/home.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:goal_diary/shared/router/router_config.dart';
 import 'package:goal_diary/shared/theme/theme.dart';
 
 class MyApp extends StatelessWidget {
@@ -7,10 +7,10 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return CupertinoApp.router(
       title: 'Goal Diary',
       theme: lightTheme,
-      home: Home(),
+      routerConfig: routerConfig,
     );
   }
 }

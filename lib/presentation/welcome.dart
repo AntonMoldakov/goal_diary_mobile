@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
-class Home extends StatefulWidget {
+class Welcome extends StatefulWidget {
   @override
-  _HomeState createState() => _HomeState();
+  _WelcomeState createState() => _WelcomeState();
 }
 
-class _HomeState extends State<Home> {
+class _WelcomeState extends State<Welcome> {
   @override
   Widget build(BuildContext context) {
     return const Scaffold(
@@ -13,7 +13,7 @@ class _HomeState extends State<Home> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Text(
-            "Hello World!",
+            "Welcome!",
             textAlign: TextAlign.center,
           )
         ],

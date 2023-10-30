@@ -1,6 +1,6 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-final lightTheme = ThemeData(
-  primarySwatch: Colors.blue,
-  visualDensity: VisualDensity.adaptivePlatformDensity,
+final lightTheme = CupertinoThemeData(
+  primaryColor: Colors.blue,
 );
