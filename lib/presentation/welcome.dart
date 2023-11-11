@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class Welcome extends StatefulWidget {
   @override
@@ -8,12 +9,12 @@ class Welcome extends StatefulWidget {
 class _WelcomeState extends State<Welcome> {
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
+    return Scaffold(
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Text(
-            "Welcome!",
+            AppLocalizations.of(context)!.helloWorld,
             textAlign: TextAlign.center,
           )
         ],
