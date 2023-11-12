@@ -9,7 +9,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CupertinoApp.router(
-      onGenerateTitle: (context) => AppLocalizations.of(context)!.app,
+      onGenerateTitle: (context) => AppLocalizations.of(context)!.title,
       theme: lightTheme,
       routerConfig: routerConfig,
       localizationsDelegates: AppLocalizations.localizationsDelegates,

@@ -11,6 +11,7 @@ final routerConfig = GoRouter(
 
     bool isCurrentScreenLogin = state.fullPath == AppRoute.welcome.toPath;
 
+    // ignore: dead_code
     if (isAuthenticated && isCurrentScreenLogin) {
       return AppRoute.home.toPath;
     }
@@ -18,7 +19,7 @@ final routerConfig = GoRouter(
     if (!isAuthenticated) {
       return AppRoute.welcome.toPath;
     }
-
+    // ignore: dead_code
     return null;
   },
   routes: [

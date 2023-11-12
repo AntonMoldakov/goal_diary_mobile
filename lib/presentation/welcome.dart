@@ -3,6 +3,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class Welcome extends StatefulWidget {
   @override
+  // ignore: library_private_types_in_public_api
   _WelcomeState createState() => _WelcomeState();
 }
 
