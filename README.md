@@ -2,6 +2,16 @@
 
 A new Flutter project.
 
+## Another dependencies
+
+The project uses git pre-commit hook by lefthook. The global left hook must be set.
+
+`gem install lefthook`
+
+or
+
+- [Lefthook: git hooks](https://github.com/evilmartians/lefthook)
+
 ## Getting Started
 
 This project is a starting point for a Flutter application.
