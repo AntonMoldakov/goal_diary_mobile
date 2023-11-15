@@ -1,4 +1,5 @@
 {
   "title": "GoalDiary",
-  "helloWorld": "Привет Мир!"
+  "helloWorld": "Привет Мир!",
+  "welcomeScreenTitle": "Добро пожаловать в приложение GoalDiary!"
 }

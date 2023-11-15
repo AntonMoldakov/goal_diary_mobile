@@ -1,4 +1,5 @@
 {
   "title": "GoalDiary",
-  "helloWorld": "Hello World!"
+  "helloWorld": "Hello World!",
+  "welcomeScreenTitle": "Welcome to GoalDiary!"
 }
