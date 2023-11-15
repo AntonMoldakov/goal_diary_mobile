@@ -1,4 +1,7 @@
 {
   "title": "GoalDiary",
-  "helloWorld": "Привет Мир!"
+  "helloWorld": "Привет Мир!",
+  "welcomeScreenTitle": "GoalDiary",
+  "welcomeScreenSubtitle": "Пиши свою историю успеха!",
+  "welcomeScreenButton": "Начать"
 }

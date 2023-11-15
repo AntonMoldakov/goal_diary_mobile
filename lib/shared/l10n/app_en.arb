@@ -1,4 +1,7 @@
 {
   "title": "GoalDiary",
-  "helloWorld": "Hello World!"
+  "helloWorld": "Hello World!",
+  "welcomeScreenTitle": "GoalDiary",
+  "welcomeScreenSubtitle": "Write Your Success Story!",
+  "welcomeScreenButton": "Let's Begin"
 }
