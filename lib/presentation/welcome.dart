@@ -1,37 +1,54 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:get_it/get_it.dart';
+import 'package:go_router/go_router.dart';
+import 'package:goal_diary/shared/router/app_route.dart';
 import 'package:goal_diary/shared/ui/ui.dart';
-import 'package:talker_flutter/talker_flutter.dart';
 
-class Welcome extends StatefulWidget {
-  @override
-  // ignore: library_private_types_in_public_api
-  _WelcomeState createState() => _WelcomeState();
-}
-
-class _WelcomeState extends State<Welcome> {
+class Welcome extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Align(
-          alignment: Alignment.center,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Text(
-                AppLocalizations.of(context)!.welcomeScreenTitle,
-                textAlign: TextAlign.center,
+      body: SafeArea(
+          child: Padding(
+              padding: const EdgeInsets.symmetric(
+                horizontal: 16,
               ),
-              CustomButton(
-                child: AppText(text: 'Welcome'),
-                onPressed: () {
-                  GetIt.I<Talker>().debug('Click');
-                },
-              )
-            ],
-          )),
+              child: Column(children: [
+                Expanded(
+                    flex: 1,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        AppText(
+                            text: AppLocalizations.of(context)!
+                                .welcomeScreenTitle,
+                            style: TextStyle(
+                                fontSize: 32, fontWeight: FontWeight.w700)),
+                        SizedBox(height: 16),
+                        AppText(
+                          text: AppLocalizations.of(context)!
+                              .welcomeScreenSubtitle,
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                              fontSize: 18, fontWeight: FontWeight.w500),
+                        ),
+                      ],
+                    )),
+                Expanded(
+                    flex: 1,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        CustomButton(
+                          text:
+                              AppLocalizations.of(context)!.welcomeScreenButton,
+                          onPressed: () {
+                            context.push(AppRoute.signIn.toPath);
+                          },
+                        )
+                      ],
+                    ))
+              ]))),
     );
   }
 }

@@ -1,5 +1,7 @@
 {
   "title": "GoalDiary",
   "helloWorld": "Привет Мир!",
-  "welcomeScreenTitle": "Добро пожаловать в приложение GoalDiary!"
+  "welcomeScreenTitle": "GoalDiary",
+  "welcomeScreenSubtitle": "Пиши свою историю успеха!",
+  "welcomeScreenButton": "Начать"
 }

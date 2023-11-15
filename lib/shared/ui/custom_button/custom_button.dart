@@ -1,19 +1,25 @@
 import 'package:flutter/cupertino.dart';
+import 'package:goal_diary/shared/ui/app_text/app_text.dart';
 
 class CustomButton extends StatelessWidget {
   final VoidCallback onPressed;
-  final Widget child;
+  final String text;
 
   const CustomButton({
     required this.onPressed,
-    required this.child,
+    required this.text,
   });
 
   @override
   Widget build(BuildContext context) {
-    return CupertinoButton(
-      onPressed: onPressed,
-      child: child,
-    );
+    return SizedBox(
+        width: double.infinity,
+        child: CupertinoButton.filled(
+          onPressed: onPressed,
+          child: AppText(
+            text: text,
+            style: TextStyle(fontSize: 18),
+          ),
+        ));
   }
 }

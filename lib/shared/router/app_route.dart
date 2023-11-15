@@ -1,10 +1,12 @@
-enum AppRoute { home, welcome }
+enum AppRoute { home, welcome, signIn }
 
 extension AppRouteExtension on AppRoute {
   String get toPath {
     switch (this) {
       case AppRoute.welcome:
         return '/welcome';
+      case AppRoute.signIn:
+        return '/sign-in';
       case AppRoute.home:
       default:
         return '/home';
@@ -15,19 +17,23 @@ extension AppRouteExtension on AppRoute {
     switch (this) {
       case AppRoute.welcome:
         return 'WELCOME';
+      case AppRoute.signIn:
+        return 'SIGN_IN';
       case AppRoute.home:
       default:
         return 'HOME';
     }
   }
 
-  String get toTitle {
+  bool get toIsPrivate {
     switch (this) {
       case AppRoute.welcome:
-        return 'Welcome';
+        return false;
+      case AppRoute.signIn:
+        return false;
       case AppRoute.home:
       default:
-        return 'My App';
+        return true;
     }
   }
 }

@@ -1,5 +1,6 @@
 import 'package:go_router/go_router.dart';
 import 'package:goal_diary/presentation/home.dart';
+import 'package:goal_diary/presentation/sign_in.dart';
 import 'package:goal_diary/presentation/welcome.dart';
 import 'package:goal_diary/shared/router/app_route.dart';
 
@@ -9,14 +10,15 @@ final routerConfig = GoRouter(
   redirect: (context, state) {
     bool isAuthenticated = false;
 
-    bool isCurrentScreenLogin = state.fullPath == AppRoute.welcome.toPath;
+    AppRoute currentRoute =
+        AppRoute.values.where((route) => route.toPath == state.fullPath).first;
 
     // ignore: dead_code
-    if (isAuthenticated && isCurrentScreenLogin) {
+    if (isAuthenticated && !currentRoute.toIsPrivate) {
       return AppRoute.home.toPath;
     }
 
-    if (!isAuthenticated) {
+    if (!isAuthenticated && currentRoute.toIsPrivate) {
       return AppRoute.welcome.toPath;
     }
     // ignore: dead_code
@@ -27,6 +29,11 @@ final routerConfig = GoRouter(
       path: AppRoute.welcome.toPath,
       name: AppRoute.welcome.toName,
       builder: (context, state) => Welcome(),
+    ),
+    GoRoute(
+      path: AppRoute.signIn.toPath,
+      name: AppRoute.signIn.toName,
+      builder: (context, state) => SignIn(),
     ),
     GoRoute(
       path: AppRoute.home.toPath,
