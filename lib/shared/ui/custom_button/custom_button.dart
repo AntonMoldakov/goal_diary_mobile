@@ -18,7 +18,7 @@ class CustomButton extends StatelessWidget {
           onPressed: onPressed,
           child: AppText(
             text: text,
-            style: TextStyle(fontSize: 18),
+            style: TextStyle(fontSize: 20),
           ),
         ));
   }

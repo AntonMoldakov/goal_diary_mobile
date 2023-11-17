@@ -3,5 +3,7 @@
   "helloWorld": "Привет Мир!",
   "welcomeScreenTitle": "GoalDiary",
   "welcomeScreenSubtitle": "Пиши свою историю успеха!",
-  "welcomeScreenButton": "Начать"
+  "welcomeScreenButton": "Начать",
+  "signInScreenTitle": "Вход",
+  "signInScreenButton": "Вход"
 }

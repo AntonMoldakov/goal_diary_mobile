@@ -3,5 +3,7 @@
   "helloWorld": "Hello World!",
   "welcomeScreenTitle": "GoalDiary",
   "welcomeScreenSubtitle": "Write Your Success Story!",
-  "welcomeScreenButton": "Let's Begin"
+  "welcomeScreenButton": "Let's Begin",
+  "signInScreenTitle": "Sign In",
+  "signInScreenButton": "Sign In"
 }
