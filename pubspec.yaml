@@ -26,6 +26,9 @@ dependencies:
   flutter_localizations:
     sdk: flutter
   intl: any
+  equatable: ^2.0.5
+  hydrated_bloc: ^9.1.2
+  path_provider: ^2.1.1
 
 dev_dependencies:
   flutter_test:
@@ -33,7 +36,7 @@ dev_dependencies:
   flutter_lints: ^3.0.1
 
 flutter:
-  uses-material-design: false
+  uses-material-design: true
   generate: true
   assets:
     - .env

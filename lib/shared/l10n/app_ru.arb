@@ -5,5 +5,10 @@
   "welcomeScreenSubtitle": "Пиши свою историю успеха!",
   "welcomeScreenButton": "Начать",
   "signInScreenTitle": "Вход",
-  "signInScreenButton": "Вход"
+  "signInScreenButton": "Вход",
+  "requiredFieldError": "Поле обязательно для заполнения",
+  "emailField": "Email",
+  "emailFieldError": "Некорректный Email адрес",
+  "passwordField": "Пароль",
+  "passwordFieldError": "Пароль должен состоять из 8 символов, содержать строчные и заглавные буквы, 1 цифру и 1 специальный символ"
 }

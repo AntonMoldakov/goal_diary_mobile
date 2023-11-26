@@ -24,7 +24,17 @@ class ApiClient {
     return _singleton;
   }
 
-  Future<Response> get(String path) {
-    return _api.get(path);
+  Future<Response<T>> get<T>(String path) {
+    return _api.get<T>(path);
+  }
+
+  Future<Response> post(
+    String path, {
+    Object? data,
+  }) {
+    return _api.post(
+      path,
+      data: data,
+    );
   }
 }

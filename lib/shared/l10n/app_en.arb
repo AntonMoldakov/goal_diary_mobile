@@ -5,5 +5,10 @@
   "welcomeScreenSubtitle": "Write Your Success Story!",
   "welcomeScreenButton": "Let's Begin",
   "signInScreenTitle": "Sign In",
-  "signInScreenButton": "Sign In"
+  "signInScreenButton": "Sign In",
+  "requiredFieldError": "Field is required",
+  "emailField": "Email",
+  "emailFieldError": "Email is not valid",
+  "passwordField": "Password",
+  "passwordFieldError": "Password must be at least 8 characters long, contain at least one uppercase letter, one lowercase letter, one number and one special character"
 }

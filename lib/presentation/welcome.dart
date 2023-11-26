@@ -36,18 +36,22 @@ class Welcome extends StatelessWidget {
                     )),
                 Expanded(
                     flex: 1,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        CustomButton(
-                          text:
-                              AppLocalizations.of(context)!.welcomeScreenButton,
-                          onPressed: () {
-                            context.push(AppRoute.signIn.toPath);
-                          },
-                        )
-                      ],
-                    ))
+                    child: Padding(
+                        padding: const EdgeInsets.only(
+                          bottom: 16,
+                        ),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            CustomButton(
+                              text: AppLocalizations.of(context)!
+                                  .welcomeScreenButton,
+                              onPressed: () {
+                                context.push(AppRoute.signIn.toPath);
+                              },
+                            )
+                          ],
+                        )))
               ]))),
     );
   }

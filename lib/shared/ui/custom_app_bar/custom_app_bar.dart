@@ -1,37 +1,29 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:goal_diary/shared/ui/ui.dart';
 
-class CustomNavigationBar extends StatelessWidget
-    implements ObstructingPreferredSizeWidget {
+class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String title;
   final Widget? leading;
-  final Widget? trailing;
 
-  const CustomNavigationBar({
-    Key? key,
+  const CustomAppBar({
+    super.key,
     required this.title,
     this.leading,
-    this.trailing,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
-    return CupertinoNavigationBar(
-      middle: AppText(
+    return AppBar(
+      title: AppText(
         text: title,
         style: TextStyle(
           fontSize: 20,
         ),
       ),
       leading: leading,
-      trailing: trailing,
     );
   }
 
   @override
   Size get preferredSize => Size.fromHeight(kToolbarHeight);
-
-  @override
-  bool shouldFullyObstruct(BuildContext context) => true;
 }

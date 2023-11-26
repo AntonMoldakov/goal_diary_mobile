@@ -1,25 +1,35 @@
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
 class CustomTextField extends StatelessWidget {
   final TextEditingController? controller;
-  final String? placeholder;
-  final IconData? prefixIcon;
+  final FormFieldValidator? validator;
+  final bool disabled;
+  final bool obscureText;
+  final Widget? suffixIcon;
+  final String? labelText;
 
   const CustomTextField({
-    Key? key,
+    super.key,
     this.controller,
-    this.placeholder,
-    this.prefixIcon,
-  }) : super(key: key);
+    this.validator,
+    this.obscureText = false,
+    this.disabled = false,
+    this.suffixIcon,
+    this.labelText,
+  });
 
   @override
   Widget build(BuildContext context) {
-    return CupertinoTextField(
+    return TextFormField(
+      validator: validator,
       controller: controller,
-      placeholder: placeholder,
-      prefix: Icon(prefixIcon),
-      padding: EdgeInsets.symmetric(vertical: 16),
-      style: TextStyle(fontSize: 20),
+      enabled: !disabled,
+      obscureText: obscureText,
+      decoration: InputDecoration(
+        suffixIcon: suffixIcon,
+        labelText: labelText,
+        floatingLabelBehavior: FloatingLabelBehavior.always,
+      ),
     );
   }
 }

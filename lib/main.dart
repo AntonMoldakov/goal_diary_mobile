@@ -4,8 +4,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get_it/get_it.dart';
 import 'package:goal_diary/app.dart';
+import 'package:goal_diary/data/repository/auth/auth_abstract_repository.dart';
+import 'package:goal_diary/data/repository/auth/auth_repository.dart';
+import 'package:goal_diary/domain/state/auth/auth.dart';
 import 'package:goal_diary/shared/config/config.dart';
 import 'package:goal_diary/shared/services/api.dart';
+import 'package:hydrated_bloc/hydrated_bloc.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:talker_bloc_logger/talker_bloc_logger.dart';
 import 'package:talker_flutter/talker_flutter.dart';
 import 'package:talker_dio_logger/talker_dio_logger.dart';
@@ -24,7 +29,7 @@ Future main() async {
     final api = ApiClient().addLogger(TalkerDioLogger(
       talker: talker,
       settings: const TalkerDioLoggerSettings(
-        printResponseData: false,
+        printResponseData: true,
       ),
     ));
     GetIt.I.registerSingleton(api);
@@ -37,10 +42,24 @@ Future main() async {
       ),
     );
 
+    WidgetsFlutterBinding.ensureInitialized();
+    HydratedBloc.storage = await HydratedStorage.build(
+      storageDirectory: await getApplicationDocumentsDirectory(),
+    );
+
+    GetIt.I.registerLazySingleton<AuthAbstractRepository>(
+      () => AuthRepository(
+        api: api,
+      ),
+    );
+
     FlutterError.onError =
         (details) => GetIt.I<Talker>().handle(details.exception, details.stack);
 
-    return runApp(const MyApp());
+    return runApp(BlocProvider<AuthBloc>(
+      create: (context) => AuthBloc(GetIt.I<AuthAbstractRepository>()),
+      child: MyApp(),
+    ));
   }, (e, st) {
     GetIt.I<Talker>().handle(e, st);
   });
