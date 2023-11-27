@@ -17,7 +17,6 @@ class CustomRouterConfig {
               .where((route) => route.toPath == state.fullPath)
               .first;
 
-          // ignore: dead_code
           if (isAuthenticated && !currentRoute.toIsPrivate) {
             return AppRoute.home.toPath;
           }
@@ -25,7 +24,7 @@ class CustomRouterConfig {
           if (!isAuthenticated && currentRoute.toIsPrivate) {
             return AppRoute.welcome.toPath;
           }
-          // ignore: dead_code
+
           return null;
         },
         routes: [

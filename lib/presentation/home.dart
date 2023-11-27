@@ -1,24 +1,30 @@
-import 'package:flutter/cupertino.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:goal_diary/domain/state/auth/auth.dart';
+import 'package:goal_diary/shared/ui/custom_button/custom_button.dart';
 
 class Home extends StatefulWidget {
   @override
-  // ignore: library_private_types_in_public_api
-  _HomeState createState() => _HomeState();
+  createState() => _HomeState();
 }
 
 class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
-    return CupertinoPageScaffold(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Text(
-            AppLocalizations.of(context)!.helloWorld,
-            textAlign: TextAlign.center,
-          )
-        ],
+    return Scaffold(
+      body: BlocBuilder<AuthBloc, AuthState>(
+        builder: (context, state) {
+          return Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              CustomButton(
+                text: 'SignOut',
+                onPressed: () =>
+                    BlocProvider.of<AuthBloc>(context).add(SignOutEvent()),
+              )
+            ],
+          );
+        },
       ),
     );
   }

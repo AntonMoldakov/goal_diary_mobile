@@ -9,14 +9,12 @@ import 'package:talker_flutter/talker_flutter.dart';
 
 class SignIn extends StatefulWidget {
   @override
-  // ignore: library_private_types_in_public_api
-  _SignInState createState() => _SignInState();
+  createState() => _SignInState();
 }
 
 class _SignInState extends State<SignIn> {
   final _formKey = GlobalKey<FormState>();
   bool _isFormValid = false;
-  bool _isFormLoading = false;
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
 
@@ -45,7 +43,7 @@ class _SignInState extends State<SignIn> {
                                     controller: _emailController,
                                     labelText: AppLocalizations.of(context)!
                                         .emailField,
-                                    disabled: _isFormLoading,
+                                    disabled: state.isLoading,
                                     validator: (value) =>
                                         FormValidator(value, true, context)
                                             .emailValidationError),
@@ -54,7 +52,7 @@ class _SignInState extends State<SignIn> {
                                     controller: _passwordController,
                                     labelText: AppLocalizations.of(context)!
                                         .passwordField,
-                                    disabled: _isFormLoading,
+                                    disabled: state.isLoading,
                                     validator: (value) => FormValidator(
                                           value,
                                           true,
@@ -70,15 +68,13 @@ class _SignInState extends State<SignIn> {
                                 CustomButton(
                                   text: AppLocalizations.of(context)!
                                       .signInScreenButton,
-                                  disabled: !_isFormValid || _isFormLoading,
+                                  loading: state.isLoading,
+                                  disabled: !_isFormValid,
                                   onPressed: () async {
-                                    setState(() => _isFormLoading = true);
-
                                     if (_formKey.currentState!.validate()) {
                                       final email = _emailController.text;
                                       final password = _passwordController.text;
 
-                                      // TODO: add loading state
                                       BlocProvider.of<AuthBloc>(context).add(
                                           SignInEvent(
                                               email: email,
@@ -86,8 +82,6 @@ class _SignInState extends State<SignIn> {
                                     } else {
                                       GetIt.I<Talker>().debug('error');
                                     }
-
-                                    setState(() => _isFormLoading = false);
                                   },
                                 )
                               ],

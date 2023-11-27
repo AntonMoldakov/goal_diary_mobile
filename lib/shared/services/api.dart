@@ -10,12 +10,14 @@ class ApiClient {
   factory ApiClient() => _singleton;
 
   ApiClient._internal() {
-    _api = Dio();
-
     final config = GetIt.I<Config>();
 
-    _api.options.baseUrl = config.baseApiUrl;
-    _api.options.headers = {'Content-Type': 'application/json'};
+    _api = Dio(BaseOptions(
+      baseUrl: config.baseApiUrl,
+      connectTimeout: Duration(seconds: 5),
+      receiveTimeout: Duration(seconds: 5),
+      headers: {'Content-Type': 'application/json'},
+    ));
   }
 
   ApiClient addLogger(Interceptor interceptor) {
