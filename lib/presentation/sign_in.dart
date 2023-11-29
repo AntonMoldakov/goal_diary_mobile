@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:get_it/get_it.dart';
 import 'package:goal_diary/domain/state/auth/auth.dart';
-import 'package:goal_diary/shared/helpers/form_validator.dart';
+import 'package:goal_diary/shared/helpers/form_validation_builder.dart';
 import 'package:goal_diary/shared/ui/ui.dart';
 import 'package:talker_flutter/talker_flutter.dart';
 
@@ -14,7 +14,6 @@ class SignIn extends StatefulWidget {
 
 class _SignInState extends State<SignIn> {
   final _formKey = GlobalKey<FormState>();
-  bool _isFormValid = false;
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
 
@@ -31,8 +30,6 @@ class _SignInState extends State<SignIn> {
                 builder: (context, state) {
                   return Form(
                       key: _formKey,
-                      onChanged: () => setState(() =>
-                          _isFormValid = _formKey.currentState!.validate()),
                       child: Column(children: [
                         Expanded(
                             flex: 1,
@@ -45,19 +42,21 @@ class _SignInState extends State<SignIn> {
                                         .emailField,
                                     disabled: state.isLoading,
                                     validator: (value) =>
-                                        FormValidator(value, true, context)
-                                            .emailValidationError),
+                                        FormValidationBuilder(value, context)
+                                            .required()
+                                            .email()
+                                            .build()),
                                 SizedBox(height: 16),
                                 PasswordTextField(
                                     controller: _passwordController,
                                     labelText: AppLocalizations.of(context)!
                                         .passwordField,
                                     disabled: state.isLoading,
-                                    validator: (value) => FormValidator(
-                                          value,
-                                          true,
-                                          context,
-                                        ).passwordValidationError),
+                                    validator: (value) =>
+                                        FormValidationBuilder(value, context)
+                                            .required()
+                                            .password()
+                                            .build()),
                               ],
                             )),
                         Expanded(
@@ -69,7 +68,6 @@ class _SignInState extends State<SignIn> {
                                   text: AppLocalizations.of(context)!
                                       .signInScreenButton,
                                   loading: state.isLoading,
-                                  disabled: !_isFormValid,
                                   onPressed: () async {
                                     if (_formKey.currentState!.validate()) {
                                       final email = _emailController.text;
