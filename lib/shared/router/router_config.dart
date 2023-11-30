@@ -1,6 +1,7 @@
 import 'package:go_router/go_router.dart';
 import 'package:goal_diary/presentation/home.dart';
 import 'package:goal_diary/presentation/sign_in.dart';
+import 'package:goal_diary/presentation/sign_up.dart';
 import 'package:goal_diary/presentation/welcome.dart';
 import 'package:goal_diary/shared/router/app_route.dart';
 
@@ -37,6 +38,11 @@ class CustomRouterConfig {
             path: AppRoute.signIn.toPath,
             name: AppRoute.signIn.toName,
             builder: (context, state) => SignIn(),
+          ),
+          GoRoute(
+            path: AppRoute.signUp.toPath,
+            name: AppRoute.signUp.toName,
+            builder: (context, state) => SignUp(),
           ),
           GoRoute(
             path: AppRoute.home.toPath,

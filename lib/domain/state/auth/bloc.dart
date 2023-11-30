@@ -1,6 +1,6 @@
 import 'package:get_it/get_it.dart';
 import 'package:goal_diary/data/repository/auth/auth_abstract_repository.dart';
-import 'package:goal_diary/data/repository/auth/dto/sign_in/sign_in.dart';
+import 'package:goal_diary/data/repository/auth/dto/dto.dart';
 import 'package:goal_diary/domain/state/auth/event.dart';
 import 'package:goal_diary/domain/state/auth/state.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
@@ -9,6 +9,7 @@ import 'package:talker_flutter/talker_flutter.dart';
 class AuthBloc extends Bloc<AuthEvent, AuthState> with HydratedMixin {
   AuthBloc(this.authRepository) : super(const AuthState(accessToken: null)) {
     on<SignInEvent>(_onSignIn);
+    on<SignUpEvent>(_onSignUp);
     on<SignOutEvent>(_onSignOut);
   }
 
@@ -25,6 +26,22 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> with HydratedMixin {
           SignInRequestDto(email: event.email, password: event.password));
 
       emit(state.copyWith(accessToken: response.accessToken));
+    } catch (e, stack) {
+      GetIt.instance<Talker>().handle(e, stack);
+    } finally {
+      emit(state.copyWith(isLoading: false));
+    }
+  }
+
+  Future<void> _onSignUp(
+    SignUpEvent event,
+    Emitter<AuthState> emit,
+  ) async {
+    try {
+      emit(state.copyWith(isLoading: true));
+
+      await authRepository.signUp(
+          SignUpRequestDto(email: event.email, password: event.password));
     } catch (e, stack) {
       GetIt.instance<Talker>().handle(e, stack);
     } finally {

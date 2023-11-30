@@ -40,6 +40,24 @@ class FormValidationBuilder {
     return this;
   }
 
+  FormValidationBuilder confirmPassword(String password) {
+    if (password != value) {
+      _errors.add(AppLocalizations.of(context)!.confirmPasswordFieldError);
+    }
+
+    return this;
+  }
+
+  FormValidationBuilder code() {
+    final codeRegExp = RegExp(r'^[0-9]{6,}$');
+
+    if (!codeRegExp.hasMatch(value!)) {
+      _errors.add(AppLocalizations.of(context)!.codeFieldError);
+    }
+
+    return this;
+  }
+
   String? build() {
     if (_errors.isEmpty) {
       return null;

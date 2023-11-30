@@ -6,9 +6,16 @@
   "welcomeScreenButton": "Начать",
   "signInScreenTitle": "Вход",
   "signInScreenButton": "Вход",
+  "signUpScreenButton": "Создать",
   "requiredFieldError": "Поле обязательно для заполнения",
   "emailField": "Email",
   "emailFieldError": "Некорректный Email адрес",
+  "doNotHaveAccount": "Вы ещё не имеете аккаунта?",
+  "haveAccount": "Уже есть аккаунт?",
+  "signIn": "Войти!",
+  "signUp": "Создать!",
+  "signUpScreenTitle": "Регистрация",
   "passwordField": "Пароль",
+  "confirmPasswordField": "Подтвердите пароль",
   "passwordFieldError": "Пароль должен состоять из 8 символов, содержать строчные и заглавные буквы, 1 цифру и 1 специальный символ"
 }

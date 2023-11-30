@@ -9,21 +9,22 @@ import 'package:goal_diary/shared/router/app_route.dart';
 import 'package:goal_diary/shared/ui/ui.dart';
 import 'package:talker_flutter/talker_flutter.dart';
 
-class SignIn extends StatefulWidget {
+class SignUp extends StatefulWidget {
   @override
-  createState() => _SignInState();
+  createState() => _SignUpState();
 }
 
-class _SignInState extends State<SignIn> {
+class _SignUpState extends State<SignUp> {
   final _formKey = GlobalKey<FormState>();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
+  final _confirmPasswordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBar(
-        title: AppLocalizations.of(context)!.signInScreenTitle,
+        title: AppLocalizations.of(context)!.signUpScreenTitle,
       ),
       body: SafeArea(
           child: Padding(
@@ -60,49 +61,60 @@ class _SignInState extends State<SignIn> {
                                             .password()
                                             .build()),
                                 SizedBox(height: 16),
+                                PasswordTextField(
+                                    controller: _confirmPasswordController,
+                                    labelText: AppLocalizations.of(context)!
+                                        .confirmPasswordField,
+                                    disabled: state.isLoading,
+                                    validator: (value) =>
+                                        FormValidationBuilder(value, context)
+                                            .required()
+                                            .confirmPassword(
+                                                _passwordController.text)
+                                            .build()),
+                                SizedBox(height: 16),
                                 Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   mainAxisSize: MainAxisSize.max,
                                   children: [
                                     Text(AppLocalizations.of(context)!
-                                        .doNotHaveAccount),
+                                        .haveAccount),
                                     CustomTextButton(
                                       onPressed: () {
-                                        context.push(AppRoute.signUp.toPath);
+                                        context.push(AppRoute.signIn.toPath);
                                       },
                                       small: true,
                                       text:
-                                          AppLocalizations.of(context)!.signUp,
+                                          AppLocalizations.of(context)!.signIn,
                                     )
                                   ],
                                 )
                               ],
                             )),
-                        Expanded(
-                            flex: 1,
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.end,
-                              children: [
-                                CustomButton(
-                                  text: AppLocalizations.of(context)!
-                                      .signInScreenButton,
-                                  loading: state.isLoading,
-                                  onPressed: () async {
-                                    if (_formKey.currentState!.validate()) {
-                                      final email = _emailController.text;
-                                      final password = _passwordController.text;
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            CustomButton(
+                              text: AppLocalizations.of(context)!
+                                  .signUpScreenButton,
+                              loading: state.isLoading,
+                              onPressed: () async {
+                                if (_formKey.currentState!.validate()) {
+                                  final email = _emailController.text;
+                                  final password = _passwordController.text;
 
-                                      BlocProvider.of<AuthBloc>(context).add(
-                                          SignInEvent(
-                                              email: email,
-                                              password: password));
-                                    } else {
-                                      GetIt.I<Talker>().debug('error');
-                                    }
-                                  },
-                                )
-                              ],
-                            ))
+                                  BlocProvider.of<AuthBloc>(context).add(
+                                      SignUpEvent(
+                                          email: email, password: password));
+
+                                  context.push(AppRoute.confirmEmail.toPath);
+                                } else {
+                                  GetIt.I<Talker>().debug('error');
+                                }
+                              },
+                            )
+                          ],
+                        )
                       ]));
                 },
               ))),

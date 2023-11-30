@@ -6,9 +6,16 @@
   "welcomeScreenButton": "Let's Begin",
   "signInScreenTitle": "Sign In",
   "signInScreenButton": "Sign In",
+  "signUpScreenButton": "Sign Up",
   "requiredFieldError": "Field is required",
   "emailField": "Email",
   "emailFieldError": "Email is not valid",
   "passwordField": "Password",
+  "doNotHaveAccount": "Don’t have an account?",
+  "haveAccount": "Already have an account",
+  "signIn": "Sign In!",
+  "signUp": "Sign Up!",
+  "signUpScreenTitle": "Sign Up",
+  "confirmPasswordField": "Сonfirm password",
   "passwordFieldError": "Password must be at least 8 characters long, contain at least one uppercase letter, one lowercase letter, one number and one special character"
 }

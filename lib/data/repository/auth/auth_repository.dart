@@ -2,8 +2,7 @@ import 'dart:async';
 
 import 'package:get_it/get_it.dart';
 import 'package:goal_diary/data/repository/auth/auth_abstract_repository.dart';
-import 'package:goal_diary/data/repository/auth/dto/sign_in/request_dto.dart';
-import 'package:goal_diary/data/repository/auth/dto/sign_in/response_dto.dart';
+import 'package:goal_diary/data/repository/auth/dto/dto.dart';
 import 'package:goal_diary/shared/services/api.dart';
 import 'package:talker_flutter/talker_flutter.dart';
 
@@ -22,6 +21,16 @@ class AuthRepository implements AuthAbstractRepository {
       final data = response.data as Map<String, dynamic>;
 
       return SignInResponseDto(accessToken: data['accessToken']);
+    } catch (e, stack) {
+      GetIt.instance<Talker>().handle(e, stack);
+      throw Exception(e.toString());
+    }
+  }
+
+  @override
+  FutureOr signUp(SignUpRequestDto signUpRequestDto) async {
+    try {
+      await api.post('/v1/auth/sign-up', data: signUpRequestDto.toJson());
     } catch (e, stack) {
       GetIt.instance<Talker>().handle(e, stack);
       throw Exception(e.toString());
