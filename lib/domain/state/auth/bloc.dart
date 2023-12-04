@@ -11,6 +11,8 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> with HydratedMixin {
     on<SignInEvent>(_onSignIn);
     on<SignUpEvent>(_onSignUp);
     on<SignOutEvent>(_onSignOut);
+    on<ConfirmEmailEvent>(_confirmEmail);
+    on<ResendCodeEvent>(_resendCode);
   }
 
   final AuthAbstractRepository authRepository;
@@ -42,6 +44,39 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> with HydratedMixin {
 
       await authRepository.signUp(
           SignUpRequestDto(email: event.email, password: event.password));
+
+      emit(state.copyWith(email: event.email));
+    } catch (e, stack) {
+      GetIt.instance<Talker>().handle(e, stack);
+    } finally {
+      emit(state.copyWith(isLoading: false));
+    }
+  }
+
+  Future<void> _confirmEmail(
+    ConfirmEmailEvent event,
+    Emitter<AuthState> emit,
+  ) async {
+    try {
+      emit(state.copyWith(isLoading: true));
+
+      await authRepository.confirmEmail(
+          ConfirmEmailRequestDto(email: event.email, code: event.code));
+    } catch (e, stack) {
+      GetIt.instance<Talker>().handle(e, stack);
+    } finally {
+      emit(state.copyWith(isLoading: false));
+    }
+  }
+
+  Future<void> _resendCode(
+    ResendCodeEvent event,
+    Emitter<AuthState> emit,
+  ) async {
+    try {
+      emit(state.copyWith(isLoading: true));
+
+      await authRepository.resendCode(ResendCodeRequestDto(email: event.email));
     } catch (e, stack) {
       GetIt.instance<Talker>().handle(e, stack);
     } finally {

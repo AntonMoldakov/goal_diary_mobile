@@ -6,4 +6,8 @@ abstract class AuthAbstractRepository {
   FutureOr<SignInResponseDto> signIn(SignInRequestDto signInDto);
 
   FutureOr signUp(SignUpRequestDto signUpDto);
+
+  FutureOr confirmEmail(ConfirmEmailRequestDto confirmEmailDto);
+
+  FutureOr resendCode(ResendCodeRequestDto resendCodeDto);
 }

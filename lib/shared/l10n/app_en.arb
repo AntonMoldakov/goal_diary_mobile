@@ -4,18 +4,34 @@
   "welcomeScreenTitle": "GoalDiary",
   "welcomeScreenSubtitle": "Write Your Success Story!",
   "welcomeScreenButton": "Let's Begin",
+  "confirmEmailScreenTitle": "Confirm Email",
   "signInScreenTitle": "Sign In",
   "signInScreenButton": "Sign In",
   "signUpScreenButton": "Sign Up",
+  "confirmEmailScreenButton": "Confirm",
   "requiredFieldError": "Field is required",
   "emailField": "Email",
+  "codeField": "Code",
   "emailFieldError": "Email is not valid",
   "passwordField": "Password",
   "doNotHaveAccount": "Don’t have an account?",
   "haveAccount": "Already have an account",
+  "resendCode": "Resend code",
+  "resendIn": "Resend in {seconds}",
+  "@resendIn": {
+    "description": "A message with a single parameter",
+    "placeholders": {
+      "seconds": {
+        "type": "int",
+        "example": "60"
+      }
+    }
+  },
   "signIn": "Sign In!",
   "signUp": "Sign Up!",
   "signUpScreenTitle": "Sign Up",
   "confirmPasswordField": "Сonfirm password",
+  "confirmPasswordFieldError": "Passwords do not match",
+  "codeFieldError": "Code is not valid",
   "passwordFieldError": "Password must be at least 8 characters long, contain at least one uppercase letter, one lowercase letter, one number and one special character"
 }

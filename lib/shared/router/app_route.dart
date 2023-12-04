@@ -1,4 +1,4 @@
-enum AppRoute { home, welcome, signIn, signUp }
+enum AppRoute { home, welcome, signIn, signUp, confirmEmail }
 
 extension AppRouteExtension on AppRoute {
   String get toPath {
@@ -9,6 +9,8 @@ extension AppRouteExtension on AppRoute {
         return '/sign-in';
       case AppRoute.signUp:
         return '/sign-up';
+      case AppRoute.confirmEmail:
+        return '/confirm-email';
       case AppRoute.home:
       default:
         return '/home';
@@ -23,6 +25,8 @@ extension AppRouteExtension on AppRoute {
         return 'SIGN_IN';
       case AppRoute.signUp:
         return 'SIGN_UP';
+      case AppRoute.confirmEmail:
+        return 'CONFIRM_EMAIL';
       case AppRoute.home:
       default:
         return 'HOME';
@@ -36,6 +40,8 @@ extension AppRouteExtension on AppRoute {
       case AppRoute.signIn:
         return false;
       case AppRoute.signUp:
+        return false;
+      case AppRoute.confirmEmail:
         return false;
       case AppRoute.home:
       default:

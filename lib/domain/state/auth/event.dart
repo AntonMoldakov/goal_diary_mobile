@@ -21,6 +21,19 @@ class SignUpEvent extends AuthEvent {
   const SignUpEvent({required this.email, required this.password});
 }
 
+class ConfirmEmailEvent extends AuthEvent {
+  final String email;
+  final int code;
+
+  const ConfirmEmailEvent({required this.email, required this.code});
+}
+
+class ResendCodeEvent extends AuthEvent {
+  final String email;
+
+  const ResendCodeEvent({required this.email});
+}
+
 class SignOutEvent extends AuthEvent {
   const SignOutEvent();
 }

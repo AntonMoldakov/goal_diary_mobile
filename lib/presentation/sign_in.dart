@@ -68,7 +68,8 @@ class _SignInState extends State<SignIn> {
                                         .doNotHaveAccount),
                                     CustomTextButton(
                                       onPressed: () {
-                                        context.push(AppRoute.signUp.toPath);
+                                        context
+                                            .push(AppRoute.confirmEmail.toPath);
                                       },
                                       small: true,
                                       text:
@@ -78,31 +79,28 @@ class _SignInState extends State<SignIn> {
                                 )
                               ],
                             )),
-                        Expanded(
-                            flex: 1,
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.end,
-                              children: [
-                                CustomButton(
-                                  text: AppLocalizations.of(context)!
-                                      .signInScreenButton,
-                                  loading: state.isLoading,
-                                  onPressed: () async {
-                                    if (_formKey.currentState!.validate()) {
-                                      final email = _emailController.text;
-                                      final password = _passwordController.text;
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            CustomButton(
+                              text: AppLocalizations.of(context)!
+                                  .signInScreenButton,
+                              loading: state.isLoading,
+                              onPressed: () async {
+                                if (_formKey.currentState!.validate()) {
+                                  final email = _emailController.text;
+                                  final password = _passwordController.text;
 
-                                      BlocProvider.of<AuthBloc>(context).add(
-                                          SignInEvent(
-                                              email: email,
-                                              password: password));
-                                    } else {
-                                      GetIt.I<Talker>().debug('error');
-                                    }
-                                  },
-                                )
-                              ],
-                            ))
+                                  BlocProvider.of<AuthBloc>(context).add(
+                                      SignInEvent(
+                                          email: email, password: password));
+                                } else {
+                                  GetIt.I<Talker>().debug('error');
+                                }
+                              },
+                            )
+                          ],
+                        )
                       ]));
                 },
               ))),

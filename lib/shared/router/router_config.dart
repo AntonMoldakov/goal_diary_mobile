@@ -1,4 +1,5 @@
 import 'package:go_router/go_router.dart';
+import 'package:goal_diary/presentation/confirm_email.dart';
 import 'package:goal_diary/presentation/home.dart';
 import 'package:goal_diary/presentation/sign_in.dart';
 import 'package:goal_diary/presentation/sign_up.dart';
@@ -48,6 +49,11 @@ class CustomRouterConfig {
             path: AppRoute.home.toPath,
             name: AppRoute.home.toName,
             builder: (context, state) => Home(),
+          ),
+          GoRoute(
+            path: AppRoute.confirmEmail.toPath,
+            name: AppRoute.confirmEmail.toName,
+            builder: (context, state) => ConfirmEmail(),
           ),
         ],
       );

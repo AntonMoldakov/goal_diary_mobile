@@ -81,7 +81,7 @@ class _SignUpState extends State<SignUp> {
                                         .haveAccount),
                                     CustomTextButton(
                                       onPressed: () {
-                                        context.push(AppRoute.signIn.toPath);
+                                        context.pop();
                                       },
                                       small: true,
                                       text:
@@ -106,7 +106,7 @@ class _SignUpState extends State<SignUp> {
                                   BlocProvider.of<AuthBloc>(context).add(
                                       SignUpEvent(
                                           email: email, password: password));
-
+// TODO: only on success
                                   context.push(AppRoute.confirmEmail.toPath);
                                 } else {
                                   GetIt.I<Talker>().debug('error');

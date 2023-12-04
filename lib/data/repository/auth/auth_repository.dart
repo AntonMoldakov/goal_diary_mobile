@@ -36,4 +36,26 @@ class AuthRepository implements AuthAbstractRepository {
       throw Exception(e.toString());
     }
   }
+
+  @override
+  FutureOr confirmEmail(ConfirmEmailRequestDto confirmEmailRequestDto) async {
+    try {
+      await api.post('/v1/auth/confirm-email',
+          data: confirmEmailRequestDto.toJson());
+    } catch (e, stack) {
+      GetIt.instance<Talker>().handle(e, stack);
+      throw Exception(e.toString());
+    }
+  }
+
+  @override
+  FutureOr resendCode(ResendCodeRequestDto resendCodeRequestDto) async {
+    try {
+      await api.post('/v1/auth/resend-code',
+          data: resendCodeRequestDto.toJson());
+    } catch (e, stack) {
+      GetIt.instance<Talker>().handle(e, stack);
+      throw Exception(e.toString());
+    }
+  }
 }
