@@ -16,6 +16,8 @@ class ApiClient {
       baseUrl: config.baseApiUrl,
       connectTimeout: Duration(seconds: 5),
       receiveTimeout: Duration(seconds: 5),
+      receiveDataWhenStatusError: true,
+      sendTimeout: Duration(seconds: 5),
       headers: {'Content-Type': 'application/json'},
     ));
   }

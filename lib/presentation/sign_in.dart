@@ -28,8 +28,18 @@ class _SignInState extends State<SignIn> {
       body: SafeArea(
           child: Padding(
               padding: const EdgeInsets.all(16),
-              child: BlocBuilder<AuthBloc, AuthState>(
+              child: BlocConsumer<AuthBloc, AuthState>(
+                listener: (context, state) {
+                  if (state is AuthStateLoadingFailure) {
+                    GetIt.instance<Talker>().debug(state.errorKey);
+                    // TODO
+                    _showToast(context,
+                        (AppLocalizations.of(context) as Map)![state.errorKey]);
+                  }
+                },
                 builder: (context, state) {
+                  bool isLoading = state is AuthStateLoading;
+
                   return Form(
                       key: _formKey,
                       child: Column(children: [
@@ -42,7 +52,7 @@ class _SignInState extends State<SignIn> {
                                     controller: _emailController,
                                     labelText: AppLocalizations.of(context)!
                                         .emailField,
-                                    disabled: state.isLoading,
+                                    disabled: isLoading,
                                     validator: (value) =>
                                         FormValidationBuilder(value, context)
                                             .required()
@@ -53,7 +63,7 @@ class _SignInState extends State<SignIn> {
                                     controller: _passwordController,
                                     labelText: AppLocalizations.of(context)!
                                         .passwordField,
-                                    disabled: state.isLoading,
+                                    disabled: isLoading,
                                     validator: (value) =>
                                         FormValidationBuilder(value, context)
                                             .required()
@@ -68,8 +78,7 @@ class _SignInState extends State<SignIn> {
                                         .doNotHaveAccount),
                                     CustomTextButton(
                                       onPressed: () {
-                                        context
-                                            .push(AppRoute.confirmEmail.toPath);
+                                        context.push(AppRoute.signUp.toPath);
                                       },
                                       small: true,
                                       text:
@@ -85,7 +94,7 @@ class _SignInState extends State<SignIn> {
                             CustomButton(
                               text: AppLocalizations.of(context)!
                                   .signInScreenButton,
-                              loading: state.isLoading,
+                              loading: isLoading,
                               onPressed: () async {
                                 if (_formKey.currentState!.validate()) {
                                   final email = _emailController.text;
@@ -94,8 +103,6 @@ class _SignInState extends State<SignIn> {
                                   BlocProvider.of<AuthBloc>(context).add(
                                       SignInEvent(
                                           email: email, password: password));
-                                } else {
-                                  GetIt.I<Talker>().debug('error');
                                 }
                               },
                             )
@@ -104,6 +111,15 @@ class _SignInState extends State<SignIn> {
                       ]));
                 },
               ))),
+    );
+  }
+
+  void _showToast(BuildContext context, String message) {
+    final scaffold = ScaffoldMessenger.of(context);
+    scaffold.showSnackBar(
+      SnackBar(
+        content: Text(message),
+      ),
     );
   }
 }

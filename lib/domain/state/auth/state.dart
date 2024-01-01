@@ -1,27 +1,43 @@
 import 'package:equatable/equatable.dart';
 
 class AuthState extends Equatable {
-  final String? accessToken;
-  final String? email;
-  final bool isLoading;
-
-  const AuthState({
-    this.accessToken,
-    this.email,
-    this.isLoading = false,
-  });
-
-  AuthState copyWith({
-    String? accessToken,
-    String? email,
-    bool? isLoading,
-  }) =>
-      AuthState(
-        accessToken: accessToken,
-        email: email,
-        isLoading: isLoading ?? this.isLoading,
-      );
+  const AuthState();
 
   @override
-  List<Object?> get props => [accessToken, email, isLoading];
+  List<Object?> get props => [];
+}
+
+class AuthStateLoading extends AuthState {
+  const AuthStateLoading();
+}
+
+class AuthStateLoaded extends AuthState {
+  const AuthStateLoaded();
+}
+
+class AuthStateLoadingFailure extends AuthState {
+  const AuthStateLoadingFailure(this.errorKey);
+
+  final String errorKey;
+
+  @override
+  List<Object?> get props => super.props..add(errorKey);
+}
+
+class AuthStateCodeSentToEmail extends AuthState {
+  const AuthStateCodeSentToEmail(this.email);
+
+  final String email;
+
+  @override
+  List<Object?> get props => super.props..add(email);
+}
+
+class AuthStateLogged extends AuthState {
+  const AuthStateLogged(this.accessToken);
+
+  final String accessToken;
+
+  @override
+  List<Object?> get props => super.props..add(accessToken);
 }

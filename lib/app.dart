@@ -11,12 +11,14 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<AuthBloc, AuthState>(
+      buildWhen: (previous, current) => current is AuthStateLogged,
       builder: (context, state) {
         return MaterialApp.router(
           onGenerateTitle: (context) => AppLocalizations.of(context)!.title,
           theme: lightTheme,
           routerConfig:
-              CustomRouterConfig(state.accessToken != null).routerConfig,
+              CustomRouterConfig(state is AuthStateLogged ? true : false)
+                  .routerConfig,
           localizationsDelegates: AppLocalizations.localizationsDelegates,
           supportedLocales: AppLocalizations.supportedLocales,
         );
