@@ -7,7 +7,7 @@ import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:talker_flutter/talker_flutter.dart';
 
 class AuthBloc extends Bloc<AuthEvent, AuthState> with HydratedMixin {
-  AuthBloc(this.authRepository) : super(const AuthState(accessToken: null)) {
+  AuthBloc(this.authRepository) : super(const AuthState()) {
     on<SignInEvent>(_onSignIn);
     on<SignUpEvent>(_onSignUp);
     on<SignOutEvent>(_onSignOut);
@@ -22,16 +22,14 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> with HydratedMixin {
     Emitter<AuthState> emit,
   ) async {
     try {
-      emit(state.copyWith(isLoading: true));
-
+      emit(const AuthStateLoading());
       final response = await authRepository.signIn(
           SignInRequestDto(email: event.email, password: event.password));
 
-      emit(state.copyWith(accessToken: response.accessToken));
+      emit(AuthStateLogged(response.accessToken));
     } catch (e, stack) {
       GetIt.instance<Talker>().handle(e, stack);
-    } finally {
-      emit(state.copyWith(isLoading: false));
+      emit(AuthStateLoadingFailure(e.toString()));
     }
   }
 
@@ -40,16 +38,16 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> with HydratedMixin {
     Emitter<AuthState> emit,
   ) async {
     try {
-      emit(state.copyWith(isLoading: true));
+      emit(const AuthStateLoading());
 
       await authRepository.signUp(
           SignUpRequestDto(email: event.email, password: event.password));
+      GetIt.instance<Talker>().log(event.email);
 
-      emit(state.copyWith(email: event.email));
+      emit(AuthStateCodeSentToEmail(event.email));
     } catch (e, stack) {
       GetIt.instance<Talker>().handle(e, stack);
-    } finally {
-      emit(state.copyWith(isLoading: false));
+      emit(AuthStateLoadingFailure(e.toString()));
     }
   }
 
@@ -58,14 +56,16 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> with HydratedMixin {
     Emitter<AuthState> emit,
   ) async {
     try {
-      emit(state.copyWith(isLoading: true));
+      emit(const AuthStateLoading());
 
-      await authRepository.confirmEmail(
+      final response = await authRepository.confirmEmail(
           ConfirmEmailRequestDto(email: event.email, code: event.code));
+
+      emit(AuthStateLogged(response.accessToken));
     } catch (e, stack) {
       GetIt.instance<Talker>().handle(e, stack);
-    } finally {
-      emit(state.copyWith(isLoading: false));
+      emit(AuthStateLoadingFailure(e.toString()));
+      emit(AuthStateCodeSentToEmail(event.email));
     }
   }
 
@@ -74,38 +74,47 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> with HydratedMixin {
     Emitter<AuthState> emit,
   ) async {
     try {
-      emit(state.copyWith(isLoading: true));
+      emit(const AuthStateLoading());
 
       await authRepository.resendCode(ResendCodeRequestDto(email: event.email));
+
+      emit(AuthStateCodeSentToEmail(event.email));
     } catch (e, stack) {
       GetIt.instance<Talker>().handle(e, stack);
-    } finally {
-      emit(state.copyWith(isLoading: false));
+      emit(AuthStateLoadingFailure(e.toString()));
+      emit(AuthStateCodeSentToEmail(event.email));
     }
   }
 
-  void _onSignOut(
+  Future<void> _onSignOut(
     SignOutEvent event,
     Emitter<AuthState> emit,
-  ) {
-    try {
-      emit(state.copyWith(accessToken: null));
-    } catch (e, stack) {
-      GetIt.instance<Talker>().handle(e, stack);
-    }
+  ) async {
+    await HydratedBloc.storage.clear();
+    emit(const AuthState());
   }
 
   @override
   AuthState? fromJson(Map<String, dynamic> json) {
-    return AuthState(
-      accessToken: json['accessToken'] as String?,
-    );
+    final accessToken = json['accessToken'] as String?;
+
+    if (accessToken != null && accessToken.isNotEmpty) {
+      return AuthStateLogged(
+        accessToken,
+      );
+    }
+
+    return AuthState();
   }
 
   @override
   Map<String, dynamic>? toJson(AuthState state) {
-    return {
-      'accessToken': state.accessToken,
-    };
+    if (state is AuthStateLogged) {
+      return {
+        'accessToken': state.accessToken,
+      };
+    } else {
+      return null;
+    }
   }
 }

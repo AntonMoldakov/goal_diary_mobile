@@ -33,5 +33,12 @@
   "confirmPasswordField": "Сonfirm password",
   "confirmPasswordFieldError": "Passwords do not match",
   "codeFieldError": "Code is not valid",
-  "passwordFieldError": "Password must be at least 8 characters long, contain at least one uppercase letter, one lowercase letter, one number and one special character"
+  "passwordFieldError": "Password must be at least 8 characters long, contain at least one uppercase letter, one lowercase letter, one number and one special character",
+  "something_went_wrong": "Something went wrong",
+  "user_already_exists": "User already exists",
+  "user_does_not_exist": "User does not exist",
+  "email_or_password_incorrect": "Email or password is incorrect",
+  "code_sent": "Code has been sent",
+  "code_expired": "Code expired",
+  "incorrect_code": "Incorrect code"
 }

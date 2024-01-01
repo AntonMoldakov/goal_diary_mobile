@@ -6,8 +6,8 @@ import 'package:go_router/go_router.dart';
 import 'package:goal_diary/domain/state/auth/auth.dart';
 import 'package:goal_diary/shared/helpers/form_validation_builder.dart';
 import 'package:goal_diary/shared/router/app_route.dart';
+import 'package:goal_diary/shared/services/toaster.dart';
 import 'package:goal_diary/shared/ui/ui.dart';
-import 'package:talker_flutter/talker_flutter.dart';
 
 class SignUp extends StatefulWidget {
   @override
@@ -29,8 +29,20 @@ class _SignUpState extends State<SignUp> {
       body: SafeArea(
           child: Padding(
               padding: const EdgeInsets.all(16),
-              child: BlocBuilder<AuthBloc, AuthState>(
+              child: BlocConsumer<AuthBloc, AuthState>(
+                listener: (context, state) {
+                  if (state is AuthStateLoadingFailure) {
+                    GetIt.instance<Toaster>()
+                        .showToast(context, state.errorKey);
+                  }
+
+                  if (state is AuthStateCodeSentToEmail) {
+                    context.push(AppRoute.confirmEmail.toPath);
+                  }
+                },
                 builder: (context, state) {
+                  bool isLoading = state is AuthStateLoading;
+
                   return Form(
                       key: _formKey,
                       child: Column(children: [
@@ -43,7 +55,7 @@ class _SignUpState extends State<SignUp> {
                                     controller: _emailController,
                                     labelText: AppLocalizations.of(context)!
                                         .emailField,
-                                    disabled: state.isLoading,
+                                    disabled: isLoading,
                                     validator: (value) =>
                                         FormValidationBuilder(value, context)
                                             .required()
@@ -54,7 +66,7 @@ class _SignUpState extends State<SignUp> {
                                     controller: _passwordController,
                                     labelText: AppLocalizations.of(context)!
                                         .passwordField,
-                                    disabled: state.isLoading,
+                                    disabled: isLoading,
                                     validator: (value) =>
                                         FormValidationBuilder(value, context)
                                             .required()
@@ -65,7 +77,7 @@ class _SignUpState extends State<SignUp> {
                                     controller: _confirmPasswordController,
                                     labelText: AppLocalizations.of(context)!
                                         .confirmPasswordField,
-                                    disabled: state.isLoading,
+                                    disabled: isLoading,
                                     validator: (value) =>
                                         FormValidationBuilder(value, context)
                                             .required()
@@ -97,7 +109,7 @@ class _SignUpState extends State<SignUp> {
                             CustomButton(
                               text: AppLocalizations.of(context)!
                                   .signUpScreenButton,
-                              loading: state.isLoading,
+                              loading: isLoading,
                               onPressed: () async {
                                 if (_formKey.currentState!.validate()) {
                                   final email = _emailController.text;
@@ -106,10 +118,6 @@ class _SignUpState extends State<SignUp> {
                                   BlocProvider.of<AuthBloc>(context).add(
                                       SignUpEvent(
                                           email: email, password: password));
-// TODO: only on success
-                                  context.push(AppRoute.confirmEmail.toPath);
-                                } else {
-                                  GetIt.I<Talker>().debug('error');
                                 }
                               },
                             )

@@ -3,7 +3,9 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:get_it/get_it.dart';
 import 'package:goal_diary/domain/state/auth/auth.dart';
+import 'package:goal_diary/shared/services/toaster.dart';
 import 'package:goal_diary/shared/ui/ui.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 
@@ -21,7 +23,7 @@ class _ConfirmEmailState extends State<ConfirmEmail> {
 
   late Timer _timer;
   int _start = refetchDelay;
-  bool isLoading = true;
+  bool isTimerLoading = true;
 
   void startTimer() {
     const oneSec = Duration(seconds: 1);
@@ -31,7 +33,7 @@ class _ConfirmEmailState extends State<ConfirmEmail> {
         if (_start == 0) {
           setState(() {
             timer.cancel();
-            isLoading = false;
+            isTimerLoading = false;
           });
         } else {
           setState(() {
@@ -66,7 +68,13 @@ class _ConfirmEmailState extends State<ConfirmEmail> {
       body: SafeArea(
           child: Padding(
               padding: const EdgeInsets.all(16),
-              child: BlocBuilder<AuthBloc, AuthState>(
+              child: BlocConsumer<AuthBloc, AuthState>(
+                listener: (context, state) {
+                  if (state is AuthStateLoadingFailure) {
+                    GetIt.instance<Toaster>()
+                        .showToast(context, state.errorKey);
+                  }
+                },
                 builder: (context, state) {
                   return Column(children: [
                     Expanded(
@@ -79,14 +87,17 @@ class _ConfirmEmailState extends State<ConfirmEmail> {
                                   errorAnimationController,
                               labelText:
                                   AppLocalizations.of(context)!.codeField,
-                              disabled: state.isLoading,
+                              disabled: state is! AuthStateCodeSentToEmail,
                               onCompleted: (code) => {
-                                errorAnimationController!
-                                    .add(ErrorAnimationType.shake),
-                                BlocProvider.of<AuthBloc>(context).add(
-                                    ConfirmEmailEvent(
-                                        code: int.parse(code),
-                                        email: state.email!))
+                                if (state is AuthStateCodeSentToEmail)
+                                  {
+                                    errorAnimationController!
+                                        .add(ErrorAnimationType.shake),
+                                    BlocProvider.of<AuthBloc>(context).add(
+                                        ConfirmEmailEvent(
+                                            code: int.parse(code),
+                                            email: state.email))
+                                  }
                               },
                             ),
                             SizedBox(height: 16),
@@ -96,18 +107,22 @@ class _ConfirmEmailState extends State<ConfirmEmail> {
                               children: [
                                 CustomTextButton(
                                     onPressed: () {
-                                      setState(() {
-                                        _start = refetchDelay;
-                                        isLoading = true;
-                                        startTimer();
-                                      });
+                                      if (state is AuthStateCodeSentToEmail) {
+                                        setState(() {
+                                          _start = refetchDelay;
+                                          isTimerLoading = true;
+                                          startTimer();
+                                        });
 
-                                      BlocProvider.of<AuthBloc>(context).add(
-                                          ResendCodeEvent(email: state.email!));
+                                        BlocProvider.of<AuthBloc>(context).add(
+                                            ResendCodeEvent(
+                                                email: state.email));
+                                      }
                                     },
                                     small: true,
-                                    disabled: isLoading,
-                                    text: isLoading
+                                    disabled: isTimerLoading ||
+                                        state is! AuthStateCodeSentToEmail,
+                                    text: isTimerLoading
                                         ? AppLocalizations.of(context)!
                                             .resendIn(_start)
                                         : AppLocalizations.of(context)!
@@ -116,7 +131,6 @@ class _ConfirmEmailState extends State<ConfirmEmail> {
                             )
                           ],
                         ))
-                    // TODO: delete text
                   ]);
                 },
               ))),

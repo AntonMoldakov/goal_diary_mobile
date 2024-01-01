@@ -9,6 +9,7 @@ import 'package:goal_diary/data/repository/auth/auth_repository.dart';
 import 'package:goal_diary/domain/state/auth/auth.dart';
 import 'package:goal_diary/shared/config/config.dart';
 import 'package:goal_diary/shared/services/api.dart';
+import 'package:goal_diary/shared/services/toaster.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:talker_bloc_logger/talker_bloc_logger.dart';
@@ -26,6 +27,9 @@ Future main() async {
     final talker = TalkerFlutter.init();
     GetIt.I.registerSingleton(talker);
 
+    final toaster = Toaster();
+    GetIt.I.registerSingleton(toaster);
+
     final api = ApiClient().addLogger(TalkerDioLogger(
       talker: talker,
       settings: const TalkerDioLoggerSettings(
@@ -37,8 +41,8 @@ Future main() async {
     Bloc.observer = TalkerBlocObserver(
       talker: talker,
       settings: const TalkerBlocLoggerSettings(
-        printStateFullData: false,
-        printEventFullData: false,
+        printStateFullData: true,
+        printEventFullData: true,
       ),
     );
 
