@@ -21,7 +21,7 @@ class CustomTextButton extends StatelessWidget {
     return TextButton(
         style: ButtonStyle(
             padding: MaterialStateProperty.all(
-                EdgeInsets.symmetric(vertical: 16, horizontal: 8))),
+                EdgeInsets.symmetric(vertical: 8, horizontal: 8))),
         onPressed: disabled || loading ? null : onPressed,
         child: loading
             ? Container(

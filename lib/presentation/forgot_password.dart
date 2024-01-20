@@ -9,21 +9,20 @@ import 'package:goal_diary/shared/router/app_route.dart';
 import 'package:goal_diary/shared/services/toaster.dart';
 import 'package:goal_diary/shared/ui/ui.dart';
 
-class SignIn extends StatefulWidget {
+class ForgotPassword extends StatefulWidget {
   @override
-  createState() => _SignInState();
+  createState() => _ForgotPasswordState();
 }
 
-class _SignInState extends State<SignIn> {
+class _ForgotPasswordState extends State<ForgotPassword> {
   final _formKey = GlobalKey<FormState>();
   final _emailController = TextEditingController();
-  final _passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBar(
-        title: AppLocalizations.of(context)!.signInScreenTitle,
+        title: AppLocalizations.of(context)!.forgotPasswordTitle,
       ),
       body: SafeArea(
           child: Padding(
@@ -33,6 +32,10 @@ class _SignInState extends State<SignIn> {
                   if (state is AuthStateLoadingFailure) {
                     GetIt.instance<Toaster>()
                         .showToast(context, state.errorKey);
+                  }
+
+                  if (state is AuthStateCodeSentToEmail) {
+                    context.push(AppRoute.confirmEmail.toPath);
                   }
                 },
                 builder: (context, state) {
@@ -57,48 +60,6 @@ class _SignInState extends State<SignIn> {
                                             .email()
                                             .build()),
                                 SizedBox(height: 16),
-                                PasswordTextField(
-                                    controller: _passwordController,
-                                    labelText: AppLocalizations.of(context)!
-                                        .passwordField,
-                                    disabled: isLoading,
-                                    validator: (value) =>
-                                        FormValidationBuilder(value, context)
-                                            .required()
-                                            .password()
-                                            .build()),
-                                SizedBox(height: 16),
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  mainAxisSize: MainAxisSize.max,
-                                  children: [
-                                    Text(AppLocalizations.of(context)!
-                                        .doNotHaveAccount),
-                                    CustomTextButton(
-                                      onPressed: () {
-                                        context.push(AppRoute.signUp.toPath);
-                                      },
-                                      small: true,
-                                      text:
-                                          AppLocalizations.of(context)!.signUp,
-                                    )
-                                  ],
-                                ),
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  mainAxisSize: MainAxisSize.max,
-                                  children: [
-                                    CustomTextButton(
-                                      onPressed: () {
-                                        context.push(
-                                            AppRoute.forgotPassword.toPath);
-                                      },
-                                      small: true,
-                                      text: AppLocalizations.of(context)!
-                                          .didYouForgetPassword,
-                                    )
-                                  ],
-                                )
                               ],
                             )),
                         Column(
@@ -106,16 +67,14 @@ class _SignInState extends State<SignIn> {
                           children: [
                             CustomButton(
                               text: AppLocalizations.of(context)!
-                                  .signInScreenButton,
+                                  .forgotPasswordButton,
                               loading: isLoading,
                               onPressed: () async {
                                 if (_formKey.currentState!.validate()) {
                                   final email = _emailController.text;
-                                  final password = _passwordController.text;
 
-                                  BlocProvider.of<AuthBloc>(context).add(
-                                      SignInEvent(
-                                          email: email, password: password));
+                                  BlocProvider.of<AuthBloc>(context)
+                                      .add(ForgotPasswordEvent(email: email));
                                 }
                               },
                             )

@@ -16,6 +16,9 @@
   "passwordField": "Password",
   "doNotHaveAccount": "Don’t have an account?",
   "haveAccount": "Already have an account",
+  "didYouForgetPassword": "Did you forget your password?",
+  "forgotPasswordTitle": "Forgot Password",
+  "forgotPasswordButton": "Next",
   "resendCode": "Resend code",
   "resendIn": "Resend in {seconds}",
   "@resendIn": {

@@ -14,6 +14,9 @@
   "emailFieldError": "Некорректный Email адрес",
   "doNotHaveAccount": "Вы ещё не имеете аккаунта?",
   "haveAccount": "Уже есть аккаунт?",
+  "didYouForgetPassword": "Забыли пароль?",
+  "forgotPasswordTitle": "Восстановление пароля",
+  "forgotPasswordButton": "Восстановить",
   "resendIn": "Отправить через {seconds}",
   "@resendIn": {
     "description": "A message with a single parameter",

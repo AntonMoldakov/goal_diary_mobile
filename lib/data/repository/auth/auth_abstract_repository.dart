@@ -11,4 +11,6 @@ abstract class AuthAbstractRepository {
       ConfirmEmailRequestDto confirmEmailDto);
 
   FutureOr resendCode(ResendCodeRequestDto resendCodeDto);
+
+  FutureOr forgotPassword(ForgotPasswordRequestDto forgotPasswordRequestDto);
 }

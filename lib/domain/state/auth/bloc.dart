@@ -10,6 +10,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> with HydratedMixin {
   AuthBloc(this.authRepository) : super(const AuthState()) {
     on<SignInEvent>(_onSignIn);
     on<SignUpEvent>(_onSignUp);
+    on<ForgotPasswordEvent>(_forgotPassword);
     on<SignOutEvent>(_onSignOut);
     on<ConfirmEmailEvent>(_confirmEmail);
     on<ResendCodeEvent>(_resendCode);
@@ -42,6 +43,25 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> with HydratedMixin {
 
       await authRepository.signUp(
           SignUpRequestDto(email: event.email, password: event.password));
+      GetIt.instance<Talker>().log(event.email);
+
+      emit(AuthStateCodeSentToEmail(event.email));
+    } catch (e, stack) {
+      GetIt.instance<Talker>().handle(e, stack);
+      emit(AuthStateLoadingFailure(e.toString()));
+    }
+  }
+
+  Future<void> _forgotPassword(
+    ForgotPasswordEvent event,
+    Emitter<AuthState> emit,
+  ) async {
+    try {
+      emit(const AuthStateLoading());
+
+      await authRepository.forgotPassword(ForgotPasswordRequestDto(
+        email: event.email,
+      ));
       GetIt.instance<Talker>().log(event.email);
 
       emit(AuthStateCodeSentToEmail(event.email));
