@@ -3,5 +3,45 @@
   "helloWorld": "Привет Мир!",
   "welcomeScreenTitle": "GoalDiary",
   "welcomeScreenSubtitle": "Пиши свою историю успеха!",
-  "welcomeScreenButton": "Начать"
+  "welcomeScreenSignInButton": "Войти",
+  "welcomeScreenSignInAsGuestButton": "Гостевой режим",
+  "signInScreenTitle": "Вход",
+  "confirmEmailScreenTitle": "Подтвердить Email",
+  "signInScreenButton": "Вход",
+  "signUpScreenButton": "Создать",
+  "requiredFieldError": "Поле обязательно для заполнения",
+  "emailField": "Email",
+  "codeField": "Код",
+  "emailFieldError": "Некорректный Email адрес",
+  "doNotHaveAccount": "Вы ещё не имеете аккаунта?",
+  "haveAccount": "Уже есть аккаунт?",
+  "didYouForgetPassword": "Забыли пароль?",
+  "forgotPasswordTitle": "Восстановление пароля",
+  "forgotPasswordButton": "Восстановить",
+  "resendIn": "Отправить через {seconds}",
+  "@resendIn": {
+    "description": "A message with a single parameter",
+    "placeholders": {
+      "seconds": {
+        "type": "int",
+        "example": "60"
+      }
+    }
+  },
+  "resendCode": "Отправить код ещё раз",
+  "signIn": "Войти!",
+  "signUp": "Создать!",
+  "signUpScreenTitle": "Регистрация",
+  "passwordField": "Пароль",
+  "confirmPasswordField": "Подтвердите пароль",
+  "confirmPasswordFieldError": "Пароль не совпадает",
+  "codeFieldError": "Некорректный код",
+  "passwordFieldError": "Пароль должен состоять из 8 символов, содержать строчные и заглавные буквы, 1 цифру и 1 специальный символ",
+  "something_went_wrong": "Что-то пошло не так",
+  "user_already_exists": "Пользователь уже существует",
+  "user_does_not_exist": "Пользователь не существует",
+  "email_or_password_incorrect": "Почта или пароль некорректны",
+  "code_sent": "Код уже отправлен",
+  "code_expired": "Срок действия кода истек",
+  "incorrect_code": "Некорректный код"
 }

@@ -10,12 +10,16 @@ class ApiClient {
   factory ApiClient() => _singleton;
 
   ApiClient._internal() {
-    _api = Dio();
-
     final config = GetIt.I<Config>();
 
-    _api.options.baseUrl = config.baseApiUrl;
-    _api.options.headers = {'Content-Type': 'application/json'};
+    _api = Dio(BaseOptions(
+      baseUrl: config.baseApiUrl,
+      connectTimeout: Duration(seconds: 5),
+      receiveTimeout: Duration(seconds: 5),
+      receiveDataWhenStatusError: true,
+      sendTimeout: Duration(seconds: 5),
+      headers: {'Content-Type': 'application/json'},
+    ));
   }
 
   ApiClient addLogger(Interceptor interceptor) {
@@ -24,7 +28,17 @@ class ApiClient {
     return _singleton;
   }
 
-  Future<Response> get(String path) {
-    return _api.get(path);
+  Future<Response<T>> get<T>(String path) {
+    return _api.get<T>(path);
+  }
+
+  Future<Response> post(
+    String path, {
+    Object? data,
+  }) {
+    return _api.post(
+      path,
+      data: data,
+    );
   }
 }
