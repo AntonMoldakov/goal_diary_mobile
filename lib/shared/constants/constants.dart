@@ -12,6 +12,7 @@ final errorKeys = {
 
 class SecureStorageKeys {
   String accessToken = 'accessToken';
+  String isGuestMode = 'isGuestMode';
 }
 
 final secureStorageKeys = SecureStorageKeys();

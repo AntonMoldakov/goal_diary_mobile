@@ -5,7 +5,7 @@ import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
 import 'package:goal_diary/features/auth/domain/state/auth/auth.dart';
 import 'package:goal_diary/shared/helpers/form_validation_builder.dart';
-import 'package:goal_diary/shared/router/app_route.dart';
+import 'package:goal_diary/shared/router/constants.dart';
 import 'package:goal_diary/shared/services/toaster.dart';
 import 'package:goal_diary/shared/ui/ui.dart';
 

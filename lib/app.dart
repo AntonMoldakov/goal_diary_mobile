@@ -12,6 +12,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // TODO: fix init page
     return BlocProvider<AuthBloc>(
         create: (context) =>
             AuthBloc(GetIt.I<AuthAbstractRepository>())..add(AuthInitEvent()),

@@ -25,10 +25,12 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     AuthInitEvent event,
     Emitter<AuthState> emit,
   ) async {
-    bool isLoggedIn = GetIt.I<AuthService>().isLoggedIn;
+    final authService = GetIt.I<AuthService>();
 
-    if (isLoggedIn) {
+    if (authService.isAuthorized) {
       emit(AuthStateLogged());
+    } else if (authService.isLoggedInAsGuest) {
+      emit(AuthStateLoggedAsGuest());
     }
   }
 
@@ -36,11 +38,9 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     AuthSignInAsGuestEvent event,
     Emitter<AuthState> emit,
   ) async {
-    bool isLoggedIn = GetIt.I<AuthService>().isLoggedIn;
+    GetIt.I<AuthService>().loginAsGuest();
 
-    if (isLoggedIn) {
-      emit(AuthStateLoggedAsGuest());
-    }
+    emit(AuthStateLoggedAsGuest());
   }
 
   Future<void> _onSignIn(

@@ -8,7 +8,7 @@ import 'package:goal_diary/features/auth/presentation/home.dart';
 import 'package:goal_diary/features/auth/presentation/sign_in.dart';
 import 'package:goal_diary/features/auth/presentation/sign_up.dart';
 import 'package:goal_diary/features/auth/presentation/welcome.dart';
-import 'package:goal_diary/shared/router/app_route.dart';
+import 'package:goal_diary/shared/router/constants.dart';
 
 class AppRouter {
   static GoRouter router = GoRouter(
