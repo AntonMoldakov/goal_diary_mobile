@@ -7,6 +7,10 @@ class AuthState extends Equatable {
   List<Object?> get props => [];
 }
 
+class AuthInitState extends AuthState {
+  const AuthInitState();
+}
+
 class AuthStateLoading extends AuthState {
   const AuthStateLoading();
 }
@@ -34,10 +38,5 @@ class AuthStateCodeSentToEmail extends AuthState {
 }
 
 class AuthStateLogged extends AuthState {
-  const AuthStateLogged(this.accessToken);
-
-  final String accessToken;
-
-  @override
-  List<Object?> get props => super.props..add(accessToken);
+  const AuthStateLogged();
 }

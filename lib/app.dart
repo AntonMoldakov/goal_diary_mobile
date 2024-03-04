@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get_it/get_it.dart';
+import 'package:goal_diary/data/repository/auth/auth_abstract_repository.dart';
 import 'package:goal_diary/domain/state/auth/auth.dart';
-import 'package:goal_diary/shared/router/router_config.dart';
+import 'package:goal_diary/shared/router/app_router.dart';
 import 'package:goal_diary/shared/theme/theme.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -10,19 +12,19 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<AuthBloc, AuthState>(
-      buildWhen: (previous, current) => current is AuthStateLogged,
-      builder: (context, state) {
-        return MaterialApp.router(
-          onGenerateTitle: (context) => AppLocalizations.of(context)!.title,
-          theme: lightTheme,
-          routerConfig:
-              CustomRouterConfig(state is AuthStateLogged ? true : false)
-                  .routerConfig,
-          localizationsDelegates: AppLocalizations.localizationsDelegates,
-          supportedLocales: AppLocalizations.supportedLocales,
-        );
-      },
-    );
+    return BlocProvider<AuthBloc>(
+        create: (context) =>
+            AuthBloc(GetIt.I<AuthAbstractRepository>())..add(AuthInitEvent()),
+        child: BlocListener<AuthBloc, AuthState>(
+            listener: (context, state) {
+              AppRouter.router.refresh();
+            },
+            child: MaterialApp.router(
+              onGenerateTitle: (context) => AppLocalizations.of(context)!.title,
+              theme: lightTheme,
+              routerConfig: AppRouter.router,
+              localizationsDelegates: AppLocalizations.localizationsDelegates,
+              supportedLocales: AppLocalizations.supportedLocales,
+            )));
   }
 }

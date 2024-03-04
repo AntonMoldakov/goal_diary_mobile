@@ -9,3 +9,9 @@ final errorKeys = {
   'cashedUserDuesNotExist': 'cashed_user_dues_not_exist',
   'incorrectCode': 'incorrect_code',
 };
+
+class SecureStorageKeys {
+  String accessToken = 'accessToken';
+}
+
+final secureStorageKeys = SecureStorageKeys();

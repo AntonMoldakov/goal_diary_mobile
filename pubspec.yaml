@@ -27,9 +27,9 @@ dependencies:
     sdk: flutter
   intl: any
   equatable: ^2.0.5
-  hydrated_bloc: ^9.1.2
   path_provider: ^2.1.1
   pin_code_fields: ^8.0.1
+  flutter_secure_storage: ^9.0.0
 
 dev_dependencies:
   flutter_test:

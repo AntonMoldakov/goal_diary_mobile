@@ -2,16 +2,15 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get_it/get_it.dart';
 import 'package:goal_diary/app.dart';
 import 'package:goal_diary/data/repository/auth/auth_abstract_repository.dart';
 import 'package:goal_diary/data/repository/auth/auth_repository.dart';
-import 'package:goal_diary/domain/state/auth/auth.dart';
 import 'package:goal_diary/shared/config/config.dart';
 import 'package:goal_diary/shared/services/api.dart';
+import 'package:goal_diary/shared/services/auth.dart';
 import 'package:goal_diary/shared/services/toaster.dart';
-import 'package:hydrated_bloc/hydrated_bloc.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:talker_bloc_logger/talker_bloc_logger.dart';
 import 'package:talker_flutter/talker_flutter.dart';
 import 'package:talker_dio_logger/talker_dio_logger.dart';
@@ -26,6 +25,11 @@ Future main() async {
 
     final talker = TalkerFlutter.init();
     GetIt.I.registerSingleton(talker);
+
+    final secureStorage = FlutterSecureStorage();
+
+    final authService = await AuthService(secureStorage).init();
+    GetIt.I.registerSingleton<AuthService>(authService);
 
     final toaster = Toaster();
     GetIt.I.registerSingleton(toaster);
@@ -47,9 +51,6 @@ Future main() async {
     );
 
     WidgetsFlutterBinding.ensureInitialized();
-    HydratedBloc.storage = await HydratedStorage.build(
-      storageDirectory: await getApplicationDocumentsDirectory(),
-    );
 
     GetIt.I.registerLazySingleton<AuthAbstractRepository>(
       () => AuthRepository(
@@ -60,10 +61,7 @@ Future main() async {
     FlutterError.onError =
         (details) => GetIt.I<Talker>().handle(details.exception, details.stack);
 
-    return runApp(BlocProvider<AuthBloc>(
-      create: (context) => AuthBloc(GetIt.I<AuthAbstractRepository>()),
-      child: MyApp(),
-    ));
+    return runApp(MyApp());
   }, (e, st) {
     GetIt.I<Talker>().handle(e, st);
   });
