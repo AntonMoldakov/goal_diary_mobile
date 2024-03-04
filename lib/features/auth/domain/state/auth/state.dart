@@ -40,3 +40,7 @@ class AuthStateCodeSentToEmail extends AuthState {
 class AuthStateLogged extends AuthState {
   const AuthStateLogged();
 }
+
+class AuthStateLoggedAsGuest extends AuthState {
+  const AuthStateLoggedAsGuest();
+}

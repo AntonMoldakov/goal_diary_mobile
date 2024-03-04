@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
-import 'package:goal_diary/data/repository/auth/auth_abstract_repository.dart';
-import 'package:goal_diary/domain/state/auth/auth.dart';
+import 'package:goal_diary/features/auth/data/repository/auth/auth_abstract_repository.dart';
+import 'package:goal_diary/features/auth/domain/state/auth/auth.dart';
 import 'package:goal_diary/shared/router/app_router.dart';
 import 'package:goal_diary/shared/theme/theme.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';

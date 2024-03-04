@@ -1,13 +1,13 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:goal_diary/domain/state/auth/bloc.dart';
-import 'package:goal_diary/domain/state/auth/state.dart';
-import 'package:goal_diary/presentation/confirm_email.dart';
-import 'package:goal_diary/presentation/forgot_password.dart';
-import 'package:goal_diary/presentation/home.dart';
-import 'package:goal_diary/presentation/sign_in.dart';
-import 'package:goal_diary/presentation/sign_up.dart';
-import 'package:goal_diary/presentation/welcome.dart';
+import 'package:goal_diary/features/auth/domain/state/auth/bloc.dart';
+import 'package:goal_diary/features/auth/domain/state/auth/state.dart';
+import 'package:goal_diary/features/auth/presentation/confirm_email.dart';
+import 'package:goal_diary/features/auth/presentation/forgot_password.dart';
+import 'package:goal_diary/features/auth/presentation/home.dart';
+import 'package:goal_diary/features/auth/presentation/sign_in.dart';
+import 'package:goal_diary/features/auth/presentation/sign_up.dart';
+import 'package:goal_diary/features/auth/presentation/welcome.dart';
 import 'package:goal_diary/shared/router/app_route.dart';
 
 class AppRouter {
@@ -16,16 +16,20 @@ class AppRouter {
     initialLocation: AppRoute.welcome.toPath,
     redirect: (context, state) {
       final isLoggedIn = context.read<AuthBloc>().state is AuthStateLogged;
+      final isLoggedInAsGuest =
+          context.read<AuthBloc>().state is AuthStateLoggedAsGuest;
+
+      bool isLoggedInAny = isLoggedIn || isLoggedInAsGuest;
 
       AppRoute currentRoute = AppRoute.values
           .where((route) => route.toPath == state.fullPath)
           .first;
 
-      if (isLoggedIn && !currentRoute.toIsPrivate) {
+      if (isLoggedInAny && !currentRoute.toIsPrivate) {
         return AppRoute.home.toPath;
       }
 
-      if (!isLoggedIn && currentRoute.toIsPrivate) {
+      if (!isLoggedInAny && currentRoute.toIsPrivate) {
         return AppRoute.welcome.toPath;
       }
 

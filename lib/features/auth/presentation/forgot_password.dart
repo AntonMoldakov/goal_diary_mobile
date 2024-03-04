@@ -3,28 +3,26 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
-import 'package:goal_diary/domain/state/auth/auth.dart';
+import 'package:goal_diary/features/auth/domain/state/auth/auth.dart';
 import 'package:goal_diary/shared/helpers/form_validation_builder.dart';
 import 'package:goal_diary/shared/router/app_route.dart';
 import 'package:goal_diary/shared/services/toaster.dart';
 import 'package:goal_diary/shared/ui/ui.dart';
 
-class SignUp extends StatefulWidget {
+class ForgotPassword extends StatefulWidget {
   @override
-  createState() => _SignUpState();
+  createState() => _ForgotPasswordState();
 }
 
-class _SignUpState extends State<SignUp> {
+class _ForgotPasswordState extends State<ForgotPassword> {
   final _formKey = GlobalKey<FormState>();
   final _emailController = TextEditingController();
-  final _passwordController = TextEditingController();
-  final _confirmPasswordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBar(
-        title: AppLocalizations.of(context)!.signUpScreenTitle,
+        title: AppLocalizations.of(context)!.forgotPasswordTitle,
       ),
       body: SafeArea(
           child: Padding(
@@ -62,45 +60,6 @@ class _SignUpState extends State<SignUp> {
                                             .email()
                                             .build()),
                                 SizedBox(height: 16),
-                                PasswordTextField(
-                                    controller: _passwordController,
-                                    labelText: AppLocalizations.of(context)!
-                                        .passwordField,
-                                    disabled: isLoading,
-                                    validator: (value) =>
-                                        FormValidationBuilder(value, context)
-                                            .required()
-                                            .password()
-                                            .build()),
-                                SizedBox(height: 16),
-                                PasswordTextField(
-                                    controller: _confirmPasswordController,
-                                    labelText: AppLocalizations.of(context)!
-                                        .confirmPasswordField,
-                                    disabled: isLoading,
-                                    validator: (value) =>
-                                        FormValidationBuilder(value, context)
-                                            .required()
-                                            .confirmPassword(
-                                                _passwordController.text)
-                                            .build()),
-                                SizedBox(height: 16),
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  mainAxisSize: MainAxisSize.max,
-                                  children: [
-                                    Text(AppLocalizations.of(context)!
-                                        .haveAccount),
-                                    CustomTextButton(
-                                      onPressed: () {
-                                        context.pop();
-                                      },
-                                      small: true,
-                                      text:
-                                          AppLocalizations.of(context)!.signIn,
-                                    )
-                                  ],
-                                )
                               ],
                             )),
                         Column(
@@ -108,16 +67,14 @@ class _SignUpState extends State<SignUp> {
                           children: [
                             CustomButton(
                               text: AppLocalizations.of(context)!
-                                  .signUpScreenButton,
+                                  .forgotPasswordButton,
                               loading: isLoading,
                               onPressed: () async {
                                 if (_formKey.currentState!.validate()) {
                                   final email = _emailController.text;
-                                  final password = _passwordController.text;
 
-                                  BlocProvider.of<AuthBloc>(context).add(
-                                      SignUpEvent(
-                                          email: email, password: password));
+                                  BlocProvider.of<AuthBloc>(context)
+                                      .add(ForgotPasswordEvent(email: email));
                                 }
                               },
                             )

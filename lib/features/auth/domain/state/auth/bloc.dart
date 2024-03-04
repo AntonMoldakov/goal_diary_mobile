@@ -1,15 +1,16 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
-import 'package:goal_diary/data/repository/auth/auth_abstract_repository.dart';
-import 'package:goal_diary/data/repository/auth/dto/dto.dart';
-import 'package:goal_diary/domain/state/auth/event.dart';
-import 'package:goal_diary/domain/state/auth/state.dart';
+import 'package:goal_diary/features/auth/data/repository/auth/auth_abstract_repository.dart';
+import 'package:goal_diary/features/auth/data/repository/auth/dto/dto.dart';
+import 'package:goal_diary/features/auth/domain/state/auth/event.dart';
+import 'package:goal_diary/features/auth/domain/state/auth/state.dart';
 import 'package:goal_diary/shared/services/auth.dart';
 import 'package:talker_flutter/talker_flutter.dart';
 
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
   AuthBloc(this.authRepository) : super(const AuthState()) {
     on<AuthInitEvent>((_onAuthInitState));
+    on<AuthSignInAsGuestEvent>((_onSignInAsGuest));
     on<SignInEvent>(_onSignIn);
     on<SignUpEvent>(_onSignUp);
     on<ForgotPasswordEvent>(_forgotPassword);
@@ -28,6 +29,17 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
     if (isLoggedIn) {
       emit(AuthStateLogged());
+    }
+  }
+
+  Future<void> _onSignInAsGuest(
+    AuthSignInAsGuestEvent event,
+    Emitter<AuthState> emit,
+  ) async {
+    bool isLoggedIn = GetIt.I<AuthService>().isLoggedIn;
+
+    if (isLoggedIn) {
+      emit(AuthStateLoggedAsGuest());
     }
   }
 

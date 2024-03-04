@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:get_it/get_it.dart';
-import 'package:goal_diary/domain/state/auth/auth.dart';
+import 'package:goal_diary/features/auth/domain/state/auth/auth.dart';
 import 'package:goal_diary/shared/services/toaster.dart';
 import 'package:goal_diary/shared/ui/ui.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';

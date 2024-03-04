@@ -1,8 +1,8 @@
 // ignore_for_file: deprecated_member_use
 
 import 'package:dio/dio.dart';
-import 'package:goal_diary/data/repository/auth/auth_abstract_repository.dart';
-import 'package:goal_diary/data/repository/auth/dto/dto.dart';
+import 'package:goal_diary/features/auth/data/repository/auth/auth_abstract_repository.dart';
+import 'package:goal_diary/features/auth/data/repository/auth/dto/dto.dart';
 import 'package:goal_diary/shared/constants/constants.dart';
 import 'package:goal_diary/shared/services/api.dart';
 

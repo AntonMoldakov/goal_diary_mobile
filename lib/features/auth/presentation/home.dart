@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:goal_diary/domain/state/auth/auth.dart';
+import 'package:goal_diary/features/auth/domain/state/auth/auth.dart';
 import 'package:goal_diary/shared/ui/custom_button/custom_button.dart';
 
 class Home extends StatefulWidget {

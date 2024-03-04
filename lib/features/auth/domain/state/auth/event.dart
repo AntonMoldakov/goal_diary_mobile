@@ -11,6 +11,10 @@ class AuthInitEvent extends AuthEvent {
   const AuthInitEvent();
 }
 
+class AuthSignInAsGuestEvent extends AuthEvent {
+  const AuthSignInAsGuestEvent();
+}
+
 class SignInEvent extends AuthEvent {
   final String email;
   final String password;
